@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Список должностей</title>
+</head>
+<body>
+    <h1>Список должностей</h1>
+    <table border="1">
+        <tr>
+            <th>Post ID</th>
+            <th>Название должности</th>
+            <th>Зарплата</th>
+            <th>Изменить</th>
+        </tr>
+        {% for post in posts %}
+        <tr>
+            <td>{{ post[0] }}</td>  <!-- Используйте индексы для доступа к элементам кортежа -->
+            <td>{{ post[1] }}</td>
+            <td>{{ post[2] }}</td>
+            <td><a href="{{ url_for('edit_post', post_id=post[0]) }}">Изменить</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
