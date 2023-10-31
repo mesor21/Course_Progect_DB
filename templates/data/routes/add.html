@@ -5,9 +5,8 @@
 </head>
 <body>
     <h1>Редактирование записи</h1>
-    <form method="POST" action="{{url_for('add_post')}}">
-        <input type="text" name="postName" value="{{post['postName']}}">
-        <input type="text" name="salary" value="{{post['salary']}}">
+    <form method="POST" action="{{ url_for('add_routes') }}">
+        <input type="text" name="Name" value="{{ routes['Name'] }}">
         <input type="submit" value="Сохранить">
     </form>
 </body>

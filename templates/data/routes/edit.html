@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Редактирование записи</title>
+</head>
+<body>
+    <h1>Редактирование записи</h1>
+        <form method="POST" action="{{ url_for('update_routes', routes_id=routes['RoutesID']) }}">
+            <input type="text" name="Name" value="{{ routes['Name'] }}">
+            <input type="submit" value="Сохранить">
+        </form>
+</body>
+</html>
