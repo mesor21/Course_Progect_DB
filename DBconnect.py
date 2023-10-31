@@ -87,3 +87,38 @@ class Database:
     def delete_routes(self, id):
         delete_post_sql = "DELETE FROM Routes WHERE RoutesID = %s"
         self.query(delete_post_sql, (id,))
+# ==========
+#   Employee
+# ==========
+    def get_employee_list(self):
+        return self.query("""
+            SELECT Employee.EmployeeID, Employee.name, Employee.secondName, Employee.LastName, Post.postName
+            FROM Employee
+            LEFT JOIN Post ON Employee.PostID = Post.PostID;
+        """)
+
+    def get_employee_by_id(self, id):
+        employee_data = self.query("SELECT * FROM Employee WHERE EmployeeID = %s", (id,))
+        if employee_data:
+            employee_dict = {
+                'EmployeeID': employee_data[0][0],
+                'name': employee_data[0][1],
+                'secondName': employee_data[0][2],
+                'lastName': employee_data[0][3],
+                'PostId': employee_data[0][4],
+            }
+        else:
+            employee_dict = {}
+        return employee_dict
+
+    def update_employee(self, data):
+        update_employee_sql = "UPDATE Employee SET name = %s ,secondName = %s, lastName = %s, PostId = %s WHERE EmployeeID = %s"
+        self.query(update_employee_sql, data)
+
+    def add_employee(self, data):
+        insert_employee_sql = "INSERT INTO Employee (name, secondName, lastName, PostId) VALUES (%s, %s, %s, %s)"
+        return self.query(insert_employee_sql, data)
+
+    def delete_employee(self, id):
+        delete_employee_sql = "DELETE FROM Employee WHERE EmployeeID = %s"
+        self.query(delete_employee_sql, (id,))
