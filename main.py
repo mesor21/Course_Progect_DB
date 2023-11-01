@@ -1,7 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for
 from DBconnect import Database
-#___________________________________
-
 
 app = Flask(__name__)
 
@@ -94,9 +92,6 @@ def update_employee(employee_id):
     posts = connect.get_post_list()
     return render_template('./data/employee/edit.html', employee=employee, posts=posts)
 
-
-
-
 # ==========
 #   routes
 # ==========
@@ -135,7 +130,42 @@ def add_routes():
         }
         return render_template('/data/routes/add.html', routes=routes)
 
+# ==========
+#   bus
+# ==========
+@app.route('/edit/bus')
+def list_bus():
+    employee = connect.get_employee_list()
+    return render_template('./data/employee/list.html', employees=employee)
 
+@app.route('/edit/bus/add', methods=['GET', 'POST'])
+def add_bus():
+    if request.method == 'POST':
+        name = request.form['name']
+        second_name = request.form['secondName']
+        last_name = request.form['LastName']
+        post_id = request.form['post']
+        connect.add_employee((name, second_name, last_name, post_id))
+        return redirect(url_for('list_employee'))
+    posts = connect.get_post_list()
+    return render_template('./data/employee/add.html', posts=posts)
+@app.route('/edit/bus/delete/<int:employee_id>')
+def delete_bus(employee_id):
+    connect.delete_employee(employee_id)
+    return redirect(url_for('list_employee'))
+@app.route('/edit/bus/<int:employee_id>', methods=['GET', 'POST'])
+def update_bus(employee_id):
+    if request.method == 'POST':
+        stateNumber = request.form['stateNumber']
+        vin = request.form['vin']
+        brand = request.form['brand']
+        numberOfPeople = request.form['post']
+        connect.update_employee((stateNumber, vin, brand, numberOfPeople, employee_id))
+        return redirect(url_for('list_employee'))
+
+    employee = connect.get_employee_by_id(employee_id)
+    posts = connect.get_post_list()
+    return render_template('./data/employee/edit.html', employee=employee, posts=posts)
 # ___________________________________
 
 

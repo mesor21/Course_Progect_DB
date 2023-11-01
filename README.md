@@ -61,7 +61,7 @@ CREATE TABLE Bus (
     stateNumber varchar(255),
     vin varchar(255),
     brand varchar(255),
-    numberOfPeaple integer
+    numberOfPeople integer
 );
 CREATE TABLE Itineraty (
     ItineratyID serial PRIMARY KEY,

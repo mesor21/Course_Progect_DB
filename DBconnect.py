@@ -122,3 +122,34 @@ class Database:
     def delete_employee(self, id):
         delete_employee_sql = "DELETE FROM Employee WHERE EmployeeID = %s"
         self.query(delete_employee_sql, (id,))
+
+# =======
+#   Bus
+# =======
+    def get_bus_list(self):
+        return self.query("SELECT * FROM Bus")
+
+    def get_bus_by_id(self, id):
+        employee_data = self.query("SELECT * FROM Bus WHERE BusID = %s", (id,))
+        if employee_data:
+            employee_dict = {
+                'stateNumber': employee_data[0][0],
+                'vin': employee_data[0][1],
+                'brand': employee_data[0][2],
+                'numberOfPeople': employee_data[0][3]
+            }
+        else:
+            employee_dict = {}
+        return employee_dict
+
+    def update_bus(self, data):
+        update_employee_sql = "UPDATE Bus SET stateNumber = %s ,vin = %s, brand = %s, numberOfPeaple = %s WHERE BusID = %s"
+        self.query(update_employee_sql, data)
+
+    def add_bus(self, data):
+        insert_employee_sql = "INSERT INTO Bus (stateNumber, vin, brand, numberOfPeaple) VALUES (%s, %s, %s, %s)"
+        return self.query(insert_employee_sql, data)
+
+    def delete_bus(self, id):
+        delete_employee_sql = "DELETE FROM Bus WHERE BusID = %s"
+        self.query(delete_employee_sql, (id,))

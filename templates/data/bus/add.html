@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Добавление автобуса</title>
+</head>
+<body>
+    <h1>Добавление автобуса</h1>
+    <form method="POST" action="{{ url_for('add_bus') }}">
+        <label for="stateNumber">Гос номер:</label>
+        <input type="text" name="stateNumber" id="stateNumber" required><br>
+
+        <label for="vin">ВИН:</label>
+        <input type="text" name="vin" id="vin" required><br>
+
+        <label for="brand">Марка:</label>
+        <input type="text" name="brand" id="brand" required><br>
+
+        <label for="numberOfPeople">Количество мест:</label>
+        <input type="text" name="numberOfPeople" id="numberOfPeople" required><br>
+
+        <input type="submit" value="Добавить сотрудника">
+    </form>
+</body>
+</html>
