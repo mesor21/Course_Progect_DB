@@ -40,38 +40,55 @@
 
 ## SQL
 ```
-CREATE TABLE Post (
-    PostID serial PRIMARY KEY,
-    postName varchar(255),
-    salary double precision
+CREATE TABLE JobTitle (
+    JobTitleID serial PRIMARY KEY,
+    PostName varchar(255) NOT NULL,
+    Salary double precision
+);
+CREATE TABLE Department (
+    DepartmentID serial PRIMARY KEY,
+    Name varchar(255) NOT NULL
+);
+CREATE TABLE DriverCategory (
+    DriverCategoryID serial PRIMARY KEY,
+    Category varchar(255) NOT NULL
 );
 CREATE TABLE Employee (
     EmployeeID serial PRIMARY KEY,
-    name varchar(255),
-    secondName varchar(255),
-    LastName varchar(255),
-    PostID int REFERENCES Post(PostID)
+    Name varchar(255) NOT NULL,
+    SecondName varchar(255),
+    LastName varchar(255) NOT NULL,
+    JobTitleID integer REFERENCES JobTitle(JobTitleID),
+    DriverCategoryID integer REFERENCES DriverCategory(DriverCategoryID),
+    DepartmentID integer REFERENCES Department(DepartmentID)
 );
 CREATE TABLE Routes (
     RoutesID serial PRIMARY KEY,
-    Name varchar(255)
+    Number varchar(255) NOT NULL,
+    "From" varchar(255) NOT NULL,
+    "To" varchar(255) NOT NULL,
+    DepartureTime timestamp,
+    ArrivalTime timestamp
+);
+CREATE TABLE Brand (
+    BrandID serial PRIMARY KEY,
+    Name varchar(255) NOT NULL
 );
 CREATE TABLE Bus (
     BusID serial PRIMARY KEY,
-    stateNumber varchar(255),
-    vin varchar(255),
-    brand varchar(255),
-    numberOfPeople integer
+    StateNumber varchar(255) NOT NULL,
+    VIN varchar(255) NOT NULL,
+    BrandID integer REFERENCES Brand(BrandID),
+    NumberOfPeople integer
 );
 CREATE TABLE Itineraty (
     ItineratyID serial PRIMARY KEY,
-    BusID int REFERENCES Bus(BusID),
-    RoutesID int REFERENCES Routes(RoutesID),
-    journeyDateTime timestamp,
-    driver_EmployeeID int REFERENCES Employee(EmployeeID),
-    conductor_EmployeeID int REFERENCES Employee(EmployeeID)
+    BusID integer REFERENCES Bus(BusID),
+    RoutesID integer REFERENCES Routes(RoutesID),
+    DateTime timestamp,
+    Driver_EmployeeID integer REFERENCES Employee(EmployeeID),
+    Conductor_EmployeeID integer REFERENCES Employee(EmployeeID)
 );
-
 ```
 ## Страницы фронтенда
 1. Оснавная с выбором действия
