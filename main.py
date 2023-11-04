@@ -13,47 +13,78 @@ def edit_page():
     return render_template('./data/edit.html')
 
 # ========
-#   POST
+#   JobTitle
 # ========
-@app.route('/edit/post')
-def list_post():
-    posts = connect.get_post_list()
-    return render_template('./data/post/list.html', posts=posts)
+@app.route('/edit/jobTitle')
+def list_jobTitle():
+    posts = connect.get_jobTitle_list()
+    return render_template('./data/jobTitle/list.html', posts=posts)
 
-@app.route('/edit/post/<int:post_id>')
-def edit_post(post_id):
-    post = connect.get_post_by_id(post_id)
-    if post is None:
-        # Обработка случая, когда запись не найдена
+@app.route('/edit/jobTitle/<int:jobTitle_id>')
+def edit_jobTitle(jobTitle_id):
+    jobTitle = connect.get_jobTitle_by_id(jobTitle_id)
+    if jobTitle is None:
         return "Запись не найдена"
-    return render_template('/data/post/edit.html', post=post)
+    return render_template('/data/jobTitle/edit.html', jobTitle=jobTitle)
 
-@app.route('/edit/post/<int:post_id>', methods=['POST'])
-def update_post(post_id):
-    new_post_name = request.form['postName']
-    new_salary = request.form['salary']
-    connect.update_post((new_post_name, new_salary, post_id))
-    return redirect(url_for('list_post'))
+@app.route('/edit/jobTitle/<int:jobTitle_id>', methods=['POST'])
+def update_jobTitle(jobTitle_id):
+    new_post_name = request.form['PostName']
+    new_salary = request.form['Salary']
+    connect.update_jobTitle((new_post_name, new_salary, jobTitle_id))
+    return redirect(url_for('list_jobTitle'))
 
-@app.route('/edit/post/delete/<int:post_id>')
-def delete_post(post_id):
-    connect.delete_post(post_id)
-    return redirect(url_for('list_post'))
+@app.route('/edit/jobTitle/delete/<int:jobTitle_id>')
+def delete_jobTitle(jobTitle_id):
+    connect.delete_jobTitle(jobTitle_id)
+    return redirect(url_for('list_jobTitle'))
 
 
-@app.route('/edit/post/add', methods=['GET', 'POST'])
-def add_post():
+@app.route('/edit/jobTitle/add', methods=['GET', 'POST'])
+def add_jobTitle():
     if request.method == 'POST':
-        new_post_name = request.form['postName']
-        new_salary = request.form['salary']
-        connect.add_post((new_post_name, new_salary))
-        return redirect(url_for('list_post'))
+        new_post_name = request.form['PostName']
+        new_salary = request.form['Salary']
+        connect.add_jobTitle((new_post_name, new_salary))
+        return redirect(url_for('list_jobTitle'))
     else:
-        post = {
+        jobTitle = {
             'postName': '',
             'salary': ''
         }
-        return render_template('/data/post/add.html', post=post)
+        return render_template('/data/jobTitle/add.html', jobTitle=jobTitle)
+
+# ========
+#   Department
+# ========
+@app.route('/edit/department')
+def list_department():
+    departments = connect.get_department_list()
+    return render_template('./data/department/list.html', departments=departments)
+
+@app.route('/edit/department/add', methods=['GET', 'POST'])
+def add_department():
+    if request.method == 'POST':
+        name = request.form['name']
+        connect.add_department((name,))
+        return redirect(url_for('list_department'))
+    return render_template('./data/department/add.html')
+
+@app.route('/edit/department/delete/<int:department_id>')
+def delete_department(department_id):
+    connect.delete_department(department_id)
+    return redirect(url_for('list_department'))
+
+@app.route('/edit/department/<int:department_id>', methods=['GET', 'POST'])
+def update_department(department_id):
+    if request.method == 'POST':
+        name = request.form['name']
+        connect.update_department((name, department_id))
+        return redirect(url_for('list_department'))
+
+    department = connect.get_department_by_id(department_id)
+    return render_template('./data/department/edit.html', department=department)
+
 
 # ==========
 #   Employee
@@ -69,7 +100,7 @@ def add_employee():
         name = request.form['name']
         second_name = request.form['secondName']
         last_name = request.form['LastName']
-        post_id = request.form['post']
+        post_id = request.form['jobTitle']
         connect.add_employee((name, second_name, last_name, post_id))
         return redirect(url_for('list_employee'))
     posts = connect.get_post_list()
@@ -84,7 +115,7 @@ def update_employee(employee_id):
         updated_name = request.form['name']
         updated_second_name = request.form['secondName']
         updated_last_name = request.form['LastName']
-        updated_post_id = request.form['post']
+        updated_post_id = request.form['jobTitle']
         connect.update_employee((updated_name, updated_second_name, updated_last_name, updated_post_id, employee_id))
         return redirect(url_for('list_employee'))
 
@@ -128,7 +159,7 @@ def add_routes():
         routes = {
             'Name': ''
         }
-        return render_template('/data/routes/add.html', routes=routes)
+        return render_template('./data/routes/add.html', routes=routes)
 
 # ==========
 #   bus
@@ -144,7 +175,7 @@ def add_bus():
         name = request.form['name']
         second_name = request.form['secondName']
         last_name = request.form['LastName']
-        post_id = request.form['post']
+        post_id = request.form['jobTitle']
         connect.add_employee((name, second_name, last_name, post_id))
         return redirect(url_for('list_employee'))
     posts = connect.get_post_list()
@@ -159,7 +190,7 @@ def update_bus(employee_id):
         stateNumber = request.form['stateNumber']
         vin = request.form['vin']
         brand = request.form['brand']
-        numberOfPeople = request.form['post']
+        numberOfPeople = request.form['jobTitle']
         connect.update_employee((stateNumber, vin, brand, numberOfPeople, employee_id))
         return redirect(url_for('list_employee'))
 

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Список отделов</title>
+</head>
+<body>
+    <h1>Список отделов</h1>
+    <table border="1">
+        <tr>
+            <th>Department ID</th>
+            <th>Name</th>
+            <th>Actions</th>
+        </tr>
+        {% for department in departments %}
+        <tr>
+            <td>{{ department[0] }}</td>
+            <td>{{ department[1] }}</td>
+            <td>
+                <a href="{{ url_for('update_department', department_id=department[0]) }}">Изменить</a>
+                <a href="{{ url_for('delete_department', department_id=department[0]) }}">Удалить</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    <a href="{{ url_for('add_department') }}">Добавить отдел</a>
+</body>
+</html>

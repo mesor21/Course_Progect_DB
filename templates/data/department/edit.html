@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Редактирование отдела</title>
+</head>
+<body>
+    <h1>Редактирование отдела</h1>
+    <form method="POST" action="{{ url_for('update_department', department_id=department['DepartmentID']) }}">
+        <label for="name">Название отдела:</label>
+        <input type="text" name="name" id="name" value="{{ department['Name'] }}" required><br>
+
+        <input type="submit" value="Сохранить изменения">
+    </form>
+</body>
+</html>

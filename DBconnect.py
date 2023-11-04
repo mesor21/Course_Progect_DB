@@ -29,35 +29,64 @@ class Database:
         return data
 
 # ========
-#   POST
+#   JobTitle
 # ========
-    def get_post_list(self):
-        return self.query("SELECT * FROM Post")
+    def get_jobTitle_list(self):
+        return self.query("SELECT * FROM JobTitle")
 
-    def get_post_by_id(self, post_id):
-        post_data = self.query("SELECT * FROM Post WHERE PostID = %s", (post_id,))
+    def get_jobTitle_by_id(self, data):
+        post_data = self.query("SELECT * FROM JobTitle WHERE JobTitleID = %s", (data,))
         if post_data:
             post_dict = {
-                'PostID': post_data[0][0],
-                'postName': post_data[0][1],
-                'salary': post_data[0][2]
+                'JobTitleID': post_data[0][0],
+                'PostName': post_data[0][1],
+                'Salary': post_data[0][2]
             }
         else:
             post_dict = {}
         return post_dict
 
 
-    def update_post(self, data):
-        update_post_sql = "UPDATE Post SET postName = %s, salary = %s WHERE PostID = %s"
+    def update_jobTitle(self, data):
+        update_post_sql = "UPDATE JobTitle SET PostName = %s, Salary = %s WHERE JobTitleID = %s"
         self.query(update_post_sql, data)
 
-    def add_post(self, data):
-        insert_post_sql = "INSERT INTO Post (postName, salary) VALUES (%s, %s)"
+    def add_jobTitle(self, data):
+        insert_post_sql = "INSERT INTO JobTitle (PostName, Salary) VALUES (%s, %s)"
         self.query(insert_post_sql, data)
 
-    def delete_post(self, post_id):
-        delete_post_sql = "DELETE FROM Post WHERE PostID = %s"
-        self.query(delete_post_sql, (post_id,))
+    def delete_jobTitle(self, data):
+        delete_post_sql = "DELETE FROM JobTitle WHERE JobTitleID = %s"
+        self.query(delete_post_sql, (data,))
+
+# ========
+#   department
+# ========
+    def get_department_list(self):
+        return self.query("SELECT * FROM department")
+
+    def get_department_by_id(self, data):
+        department_data = self.query("SELECT * FROM department WHERE DepartmentID = %s", (data,))
+        if department_data:
+            department_dict = {
+                'DepartmentID': department_data[0][0],
+                'Name': department_data[0][1]
+            }
+        else:
+            department_dict = {}
+        return department_dict
+
+    def update_department(self, data):
+        update_department_sql = "UPDATE department SET Name = %s WHERE DepartmentID = %s"
+        self.query(update_department_sql, data)
+
+    def add_department(self, data):
+        insert_department_sql = "INSERT INTO department (Name) VALUES (%s)"
+        self.query(insert_department_sql, data)
+
+    def delete_department(self, data):
+        delete_department_sql = "DELETE FROM department WHERE DepartmentID = %s"
+        self.query(delete_department_sql, (data,))
 
 # ==========
 #   routes

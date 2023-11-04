@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Добавление отдела</title>
+</head>
+<body>
+    <h1>Добавление отдела</h1>
+    <form method="POST" action="{{ url_for('add_department') }}">
+        <label for="name">Название отдела:</label>
+        <input type="text" name="name" id="name" required><br>
+
+        <input type="submit" value="Добавить отдел">
+    </form>
+</body>
+</html>
