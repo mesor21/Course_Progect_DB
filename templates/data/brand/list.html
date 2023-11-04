@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>List Brand</title>
+</head>
+<body>
+    <a href="{{ url_for('main_page') }}">Основная страница</a>
+    <a href="{{ url_for('edit_page') }}">Изменение данных</a>
+    <a href="{{ url_for('compose_routes') }}">Составление маршрутных листов</a>
+    <a href="{{ url_for('queries_page') }}">Запросы</a>
+    <h1>List Brand</h1>
+    <table border="1">
+        <tr>
+            <th>Brand ID</th>
+            <th>Name</th>
+            <th>Actions</th>
+        </tr>
+        {% for brand in brands %}
+        <tr>
+            <td>{{ brand[0] }}</td>
+            <td>{{ brand[1] }}</td>
+            <td>
+                <a href="{{ url_for('update_brand', brand_id=brand[0]) }}">Изменить</a>
+                <a href="{{ url_for('delete_brand', brand_id=brand[0]) }}">Удалить</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    <a href="{{ url_for('add_brand') }}">Add Brand</a>
+</body>
+</html>

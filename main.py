@@ -172,8 +172,6 @@ def delete_employee(employee_id):
     connect.delete_employee(employee_id)
     return redirect(url_for('list_employee'))
 
-
-
 # ==========
 #   routes
 # ==========
@@ -215,6 +213,42 @@ def update_route(route_id):
 
     route = connect.get_route_by_id(route_id)
     return render_template('./data/routes/edit.html', route=route)
+
+# ========
+#   Brand
+# ========
+@app.route('/edit/brand')
+def list_brand():
+    brands = connect.get_brand_list()
+    return render_template('./data/brand/list.html', brands=brands)
+
+@app.route('/edit/brand/add', methods=['GET', 'POST'])
+def add_brand():
+    if request.method == 'POST':
+        name = request.form['name']
+        brand_id = connect.add_brand({'Name': name})
+        if brand_id is not None:
+            return redirect(url_for('list_brand'))
+        else:
+            # Обработка ошибки, если вставка не удалась
+            pass
+    return render_template('./data/brand/add.html')
+
+@app.route('/edit/brand/delete/<int:brand_id>')
+def delete_brand(brand_id):
+    connect.delete_brand(brand_id)
+    return redirect(url_for('list_brand'))
+
+@app.route('/edit/brand/<int:brand_id>', methods=['GET', 'POST'])
+def update_brand(brand_id):
+    if request.method == 'POST':
+        name = request.form['name']
+        connect.update_brand({'Name': name, 'BrandID': brand_id})
+        return redirect(url_for('list_brand'))
+
+    brand = connect.get_brand_by_id(brand_id)
+    return render_template('./data/brand/edit.html', brand=brand)
+
 
 # ==========
 #   bus

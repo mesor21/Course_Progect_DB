@@ -194,6 +194,35 @@ class Database:
 # =======
 #   Bus
 # =======
+    def get_brand_list(self):
+        return self.query("SELECT * FROM Brand")
+
+    def get_brand_by_id(self, brand_id):
+        brand_data = self.query("SELECT * FROM Brand WHERE BrandID = %s", (brand_id,))
+        if brand_data:
+            brand_dict = {
+                'BrandID': brand_data[0][0],
+                'Name': brand_data[0][1]
+            }
+        else:
+            brand_dict = {}
+        return brand_dict
+
+    def update_brand(self, brand_data):
+        update_brand_sql = "UPDATE Brand SET Name = %s WHERE BrandID = %s"
+        self.query(update_brand_sql, (brand_data['Name'], brand_data['BrandID']))
+
+    def add_brand(self, brand_data):
+        insert_brand_sql = "INSERT INTO Brand (Name) VALUES (%s) RETURNING BrandID"
+        result = self.query(insert_brand_sql, (brand_data['Name'],))
+        return result[0][0] if result else None
+
+    def delete_brand(self, brand_id):
+        delete_brand_sql = "DELETE FROM Brand WHERE BrandID = %s"
+        self.query(delete_brand_sql, (brand_id,))
+# =======
+#   Bus
+# =======
     def get_bus_list(self):
         return self.query("SELECT * FROM Bus")
 

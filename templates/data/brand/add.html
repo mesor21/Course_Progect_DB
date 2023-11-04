@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Brand</title>
+    <a href="{{ url_for('main_page') }}">Основная страница</a>
+    <a href="{{ url_for('edit_page') }}">Изменение данных</a>
+    <a href="{{ url_for('compose_routes') }}">Составление маршрутных листов</a>
+    <a href="{{ url_for('queries_page') }}">Запросы</a>
+</head>
+<body>
+    <h1>Add Brand</h1>
+    <form method="POST" action="{{ url_for('add_brand') }}">
+        <label for="name">Name:</label>
+        <input type="text" name="name" id="name" required><br>
+        <input type="submit" value="Add Brand">
+    </form>
+</body>
+</html>
