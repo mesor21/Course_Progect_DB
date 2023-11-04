@@ -8,30 +8,30 @@
     <a href="{{ url_for('queries_page') }}">Запросы</a>
 </head>
 <body>
-    <h1>Список сотрудников</h1>
-    <table border="1">
+    <h1>List of Buses</h1>
+    <table>
         <tr>
-            <th>Employee ID</th>
-            <th>Name</th>
-            <th>Second Name</th>
-            <th>Last Name</th>
-            <th>Post</th>
+            <th>Bus ID</th>
+            <th>State Number</th>
+            <th>VIN</th>
+            <th>Brand</th>
+            <th>Number of People</th>
             <th>Actions</th>
         </tr>
-        {% for employee in employees %}
+        {% for bus in buses %}
         <tr>
-            <td>{{ employee[0] }}</td>
-            <td>{{ employee[1] }}</td>
-            <td>{{ employee[2] }}</td>
-            <td>{{ employee[3] }}</td>
-            <td>{{ employee[4] }}</td>
+            <td>{{ bus[0] }}</td>
+            <td>{{ bus[1] }}</td>
+            <td>{{ bus[2] }}</td>
+            <td>{{ bus[3] }}</td>
+            <td>{{ bus[4] }}</td>
             <td>
-                <a href="{{ url_for('update_employee', employee_id=employee[0]) }}">Изменить</a>
-                <a href="{{ url_for('delete_employee', employee_id=employee[0]) }}">Удалить</a>
+                <a href="{{ url_for('update_bus', bus_id=bus[0]) }}">Edit</a>
+                <a href="{{ url_for('delete_bus', bus_id=bus[0]) }}">Delete</a>
             </td>
         </tr>
         {% endfor %}
     </table>
-    <a href="{{ url_for('add_employee') }}">Добавить сотрудника</a>
+    <a href="{{ url_for('add_bus') }}">Add Bus</a>
 </body>
 </html>

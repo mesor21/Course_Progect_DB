@@ -8,25 +8,28 @@
     <a href="{{ url_for('queries_page') }}">Запросы</a>
 </head>
 <body>
-    <h1>Редактирование сотрудника</h1>
-    <form method="POST" action="{{ url_for('update_employee', employee_id=employee['EmployeeID']) }}">
-        <label for="name">Имя:</label>
-        <input type="text" name="name" id="name" value="{{ employee['name'] }}" required><br>
+    <h1>Edit Bus</h1>
+    <form method="post">
+        <label for="stateNumber">State Number:</label>
+        <input type="text" id="stateNumber" name="stateNumber" value="{{ bus['StateNumber'] }}" required><br>
 
-        <label for="secondName">Фамилия:</label>
-        <input type="text" name="secondName" id="secondName" value="{{ employee['secondName'] }}" required><br>
+        <label for="vin">VIN:</label>
+        <input type="text" id="vin" name="vin" value="{{ bus['VIN'] }}" required><br>
 
-        <label for="LastName">Отчество:</label>
-        <input type="text" name="LastName" id="LastName" value="{{ employee['lastName'] }}" required><br>
-
-        <label for="post">Должность:</label>
-        <select name="post" id="post">
-            {% for post in posts %}
-                <option value="{{ post[0] }}">{{ post[1] }}</option>
+        <label for="brand">Brand:</label>
+        <select name="brand" id="brand">
+            {% for brand in brands %}
+                <option value="{{ brand[0] }}" {% if brand[0] == bus[3] %}selected{% endif %}>
+                    {{ brand[1] }}
+                </option>
             {% endfor %}
         </select><br>
 
-        <input type="submit" value="Сохранить изменения">
+
+        <label for="numOfPeople">Number of People:</label>
+        <input type="number" name="numOfPeople" id="numOfPeople" value="{{ bus['NumberOfPeople'] }}" required><br>
+
+        <input type="submit" value="Save Changes">
     </form>
 </body>
 </html>

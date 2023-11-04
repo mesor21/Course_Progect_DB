@@ -8,21 +8,25 @@
     <a href="{{ url_for('queries_page') }}">Запросы</a>
 </head>
 <body>
-    <h1>Добавление автобуса</h1>
-    <form method="POST" action="{{ url_for('add_bus') }}">
-        <label for="stateNumber">Гос номер:</label>
+    <h1>Add Bus</h1>
+    <form method="POST" action="/edit/bus/add">
+        <label for="stateNumber">State Number:</label>
         <input type="text" name="stateNumber" id="stateNumber" required><br>
 
-        <label for="vin">ВИН:</label>
+        <label for="vin">VIN:</label>
         <input type="text" name="vin" id="vin" required><br>
 
-        <label for="brand">Марка:</label>
-        <input type="text" name="brand" id="brand" required><br>
+        <label for="brand">Brand:</label>
+        <select name="brand" id="brand" required>
+            {% for brand in brands %}
+                <option value="{{ brand[0] }}">{{ brand[1] }}</option>
+            {% endfor %}
+        </select><br>
 
-        <label for="numberOfPeople">Количество мест:</label>
-        <input type="text" name="numberOfPeople" id="numberOfPeople" required><br>
+        <label for="numOfPeople">Number of People:</label>
+        <input type="number" name="numOfPeople" id="numOfPeople" required><br>
 
-        <input type="submit" value="Добавить сотрудника">
+        <input type="submit" value="Add Bus">
     </form>
 </body>
 </html>

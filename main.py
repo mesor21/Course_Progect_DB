@@ -255,37 +255,45 @@ def update_brand(brand_id):
 # ==========
 @app.route('/edit/bus')
 def list_bus():
-    employee = connect.get_employee_list()
-    return render_template('./data/employee/list.html', employees=employee)
+    buses = connect.get_bus_list()
+    return render_template('./data/bus/list.html', buses=buses)
 
 @app.route('/edit/bus/add', methods=['GET', 'POST'])
 def add_bus():
     if request.method == 'POST':
-        name = request.form['name']
-        second_name = request.form['secondName']
-        last_name = request.form['LastName']
-        post_id = request.form['jobTitle']
-        connect.add_employee((name, second_name, last_name, post_id))
-        return redirect(url_for('list_employee'))
-    posts = connect.get_post_list()
-    return render_template('./data/employee/add.html', posts=posts)
-@app.route('/edit/bus/delete/<int:employee_id>')
-def delete_bus(employee_id):
-    connect.delete_employee(employee_id)
-    return redirect(url_for('list_employee'))
-@app.route('/edit/bus/<int:employee_id>', methods=['GET', 'POST'])
-def update_bus(employee_id):
-    if request.method == 'POST':
-        stateNumber = request.form['stateNumber']
+        state_number = request.form['stateNumber']
         vin = request.form['vin']
-        brand = request.form['brand']
-        numberOfPeople = request.form['jobTitle']
-        connect.update_employee((stateNumber, vin, brand, numberOfPeople, employee_id))
-        return redirect(url_for('list_employee'))
+        brand_id = request.form['brand']
+        num_of_people = request.form['numOfPeople']
 
-    employee = connect.get_employee_by_id(employee_id)
-    posts = connect.get_post_list()
-    return render_template('./data/employee/edit.html', employee=employee, posts=posts)
+        connect.add_bus((state_number, vin, brand_id, num_of_people))
+        return redirect(url_for('list_bus'))
+
+    # Получите список брендов (Brand) для выпадающего списка
+    brands = connect.get_brand_list()
+
+    return render_template('./data/bus/add.html', brands=brands)
+
+@app.route('/edit/bus/<int:bus_id>', methods=['GET', 'POST'])
+def update_bus(bus_id):
+    if request.method == 'POST':
+        updated_state_number = request.form['stateNumber']
+        updated_vin = request.form['vin']
+        updated_brand_id = request.form['brand']
+        updated_num_of_people = request.form['numOfPeople']
+
+        connect.update_bus((updated_state_number, updated_vin, updated_brand_id, updated_num_of_people, bus_id))
+        return redirect(url_for('list_bus'))
+
+    bus = connect.get_bus_by_id(bus_id)
+    brands = connect.get_brand_list()
+    return render_template('./data/bus/edit.html', bus=bus, brands=brands)
+
+@app.route('/edit/bus/delete/<int:bus_id>')
+def delete_bus(bus_id):
+    connect.delete_bus(bus_id)
+    return redirect(url_for('list_bus'))
+
 # ___________________________________
 
 @app.route('/compose_routes')

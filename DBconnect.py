@@ -192,7 +192,7 @@ class Database:
         self.query(delete_employee_sql, (id,))
 
 # =======
-#   Bus
+#   Brand
 # =======
     def get_brand_list(self):
         return self.query("SELECT * FROM Brand")
@@ -224,29 +224,34 @@ class Database:
 #   Bus
 # =======
     def get_bus_list(self):
-        return self.query("SELECT * FROM Bus")
+        return self.query("""
+            SELECT Bus.BusID, Bus.StateNumber, Bus.VIN, Brand.Name, Bus.NumberOfPeople
+            FROM Bus
+            LEFT JOIN Brand ON Bus.BrandID = Brand.BrandID;
+        """)
 
     def get_bus_by_id(self, id):
-        employee_data = self.query("SELECT * FROM Bus WHERE BusID = %s", (id,))
-        if employee_data:
-            employee_dict = {
-                'stateNumber': employee_data[0][0],
-                'vin': employee_data[0][1],
-                'brand': employee_data[0][2],
-                'numberOfPeople': employee_data[0][3]
+        bus_data = self.query("SELECT * FROM Bus WHERE BusID = %s", (id,))
+        if bus_data:
+            bus_dict = {
+                'BusID': bus_data[0][0],
+                'StateNumber': bus_data[0][1],
+                'VIN': bus_data[0][2],
+                'BrandID': bus_data[0][3],
+                'NumberOfPeople': bus_data[0][4]
             }
         else:
-            employee_dict = {}
-        return employee_dict
+            bus_dict = {}
+        return bus_dict
 
     def update_bus(self, data):
-        update_employee_sql = "UPDATE Bus SET stateNumber = %s ,vin = %s, brand = %s, numberOfPeaple = %s WHERE BusID = %s"
-        self.query(update_employee_sql, data)
+        update_bus_sql = "UPDATE Bus SET StateNumber = %s, VIN = %s, BrandID = %s, NumberOfPeople = %s WHERE BusID = %s"
+        self.query(update_bus_sql, data)
 
     def add_bus(self, data):
-        insert_employee_sql = "INSERT INTO Bus (stateNumber, vin, brand, numberOfPeaple) VALUES (%s, %s, %s, %s)"
-        return self.query(insert_employee_sql, data)
+        insert_bus_sql = "INSERT INTO Bus (StateNumber, VIN, BrandID, NumberOfPeople) VALUES (%s, %s, %s, %s)"
+        return self.query(insert_bus_sql, data)
 
     def delete_bus(self, id):
-        delete_employee_sql = "DELETE FROM Bus WHERE BusID = %s"
-        self.query(delete_employee_sql, (id,))
+        delete_bus_sql = "DELETE FROM Bus WHERE BusID = %s"
+        self.query(delete_bus_sql, (id,))
