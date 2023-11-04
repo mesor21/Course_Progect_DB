@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Itineraty</title>
+    <a href="{{ url_for('main_page') }}">Основная страница</a>
+    <a href="{{ url_for('edit_page') }}">Изменение данных</a>
+    <a href="{{ url_for('compose_routes') }}">Составление маршрутных листов</a>
+    <a href="{{ url_for('queries_page') }}">Запросы</a>
+</head>
+<body>
+    <h1>Add Itineraty</h1>
+    <form method="POST">
+        <label for="bus_id">Select Bus:</label>
+        <select name="bus_id" id="bus_id">
+            {% for bus in buses %}
+                <option value="{{ bus[0] }}">{{ bus[1] }}</option>
+            {% endfor %}
+        </select><br>
+
+        <label for="routes_id">Select Route:</label>
+        <select name="routes_id" id="routes_id">
+            {% for route in routes %}
+                <option value="{{ route[0] }}">{{ route[1] }}</option>
+            {% endfor %}
+        </select><br>
+
+        <label for="driver_employee_id">Select Driver:</label>
+        <select name="driver_employee_id" id="driver_employee_id">
+            {% for employee in employees %}
+                {% if employee[3] %}
+                    <option value="{{ employee[0] }}">{{ employee[3] }}</option>
+                {% endif %}
+            {% endfor %}
+        </select><br>
+
+        <label for="conductor_employee_id">Select Conductor:</label>
+        <select name="conductor_employee_id" id="conductor_employee_id">
+            {% for employee in employees %}
+                {% if employee[3] %}
+                    <option value="{{ employee[0] }}">{{ employee[3] }}</option>
+                {% endif %}
+            {% endfor %}
+        </select><br>
+
+        <label for="date_time">Date and Time:</label>
+        <input type="datetime" name="date_time" id="date_time" required><br>
+
+        <input type="submit" value="Add Itineraty">
+    </form>
+</body>
+</html>

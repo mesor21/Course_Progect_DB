@@ -2,18 +2,19 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Edit</title>
     <a href="{{ url_for('main_page') }}">Основная страница</a>
     <a href="{{ url_for('edit_page') }}">Изменение данных</a>
     <a href="{{ url_for('compose_routes') }}">Составление маршрутных листов</a>
     <a href="{{ url_for('queries_page') }}">Запросы</a>
 </head>
 <body>
+    <br>
     <a href="{{ url_for('list_jobTitle')}}">Job Title</a><br>
     <a href="{{ url_for('list_department')}}">Department</a><br>
     <a href="{{ url_for('list_driver_category')}}">Driver Category</a><br>
-    <a href="{{ url_for('list_routes')}}">Routes</a><br>
     <a href="{{ url_for('list_employee')}}">Employee</a><br>
+    <a href="{{ url_for('list_routes')}}">Routes</a><br>
     <a href="{{ url_for('list_brand')}}">Brand</a><br>
     <a href="{{ url_for('list_bus')}}">Bus</a><br>
 </body>

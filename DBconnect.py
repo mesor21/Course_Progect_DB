@@ -255,3 +255,46 @@ class Database:
     def delete_bus(self, id):
         delete_bus_sql = "DELETE FROM Bus WHERE BusID = %s"
         self.query(delete_bus_sql, (id,))
+
+# =============
+#   Itineraty
+# =============
+    def get_itineraty_list(self):
+        return self.query("""
+            SELECT
+                Itineraty.ItineratyID,
+                Bus.StateNumber AS bus_state_number,
+                Routes.Number AS route_number,
+                CONCAT(Driver.Name, ' ', Driver.SecondName) AS driver_name,
+                CONCAT(Conductor.Name, ' ', Conductor.SecondName) AS conductor_name,
+                Itineraty.DateTime AS date_time
+            FROM Itineraty
+            LEFT JOIN Bus ON Itineraty.BusID = Bus.BusID
+            LEFT JOIN Routes ON Itineraty.RoutesID = Routes.RoutesID
+            LEFT JOIN Employee AS Driver ON Itineraty.Driver_EmployeeID = Driver.EmployeeID
+            LEFT JOIN Employee AS Conductor ON Itineraty.Conductor_EmployeeID = Conductor.EmployeeID;
+        """)
+
+    def get_itineraty_by_id(self, id):
+        itineraty_data = self.query("SELECT * FROM Itineraty WHERE ItineratyID = %s", (id,))
+        if itineraty_data:
+            itineraty_dict = {
+                'ItineratyID': itineraty_data[0][0],
+                'BusID': itineraty_data[0][1],
+                'RoutesID': itineraty_data[0][2],
+                'DateTime': itineraty_data[0][3],
+                'Driver_EmployeeID': itineraty_data[0][4],
+                'Conductor_EmployeeID': itineraty_data[0][5]
+            }
+        else:
+            itineraty_dict = {}
+        return itineraty_dict
+    def update_itineraty(self, data):
+        update_itineraty_sql = "UPDATE Itineraty SET BusID = %s, RoutesID = %s, DateTime = %s, Driver_EmployeeID = %s, Conductor_EmployeeID = %s WHERE ItineratyID = %s"
+        self.query(update_itineraty_sql, data)
+    def add_itineraty(self, data):
+        insert_itineraty_sql = "INSERT INTO Itineraty (BusID, RoutesID, DateTime, Driver_EmployeeID, Conductor_EmployeeID) VALUES (%s, %s, %s, %s, %s)"
+        return self.query(insert_itineraty_sql, data)
+    def delete_itineraty(self, id):
+        delete_itineraty_sql = "DELETE FROM Itineraty WHERE ItineratyID = %s"
+        self.query(delete_itineraty_sql, (id,))

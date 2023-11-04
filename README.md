@@ -85,7 +85,7 @@ CREATE TABLE Itineraty (
     ItineratyID serial PRIMARY KEY,
     BusID integer REFERENCES Bus(BusID),
     RoutesID integer REFERENCES Routes(RoutesID),
-    DateTime timestamp,
+    DateTime varchar(255) NOT NULL,
     Driver_EmployeeID integer REFERENCES Employee(EmployeeID),
     Conductor_EmployeeID integer REFERENCES Employee(EmployeeID)
 );

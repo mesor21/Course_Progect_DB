@@ -295,11 +295,49 @@ def delete_bus(bus_id):
     return redirect(url_for('list_bus'))
 
 # ___________________________________
-
 @app.route('/compose_routes')
 def compose_routes():
-    return render_template('./data/compose_routes.html')
-# ___________________________________
+    itineraty = connect.get_itineraty_list()
+    return render_template('./data/itineraty/list.html', itineraty=itineraty)
+
+@app.route('/compose_routes/add', methods=['GET', 'POST'])
+def add_itineraty():
+    if request.method == 'POST':
+        bus_id = request.form['bus_id']
+        routes_id = request.form['routes_id']
+        date_time = request.form['date_time']
+        driver_employee_id = request.form['driver_employee_id']
+        conductor_employee_id = request.form['conductor_employee_id']
+
+        connect.add_itineraty((bus_id, routes_id, date_time, driver_employee_id, conductor_employee_id))
+        return redirect(url_for('compose_routes'))
+
+    buses = connect.get_bus_list()
+    routes = connect.get_routes_list()
+    employees = connect.get_employee_list()
+
+    return render_template('./data/itineraty/add.html', buses=buses, routes=routes, employees=employees)
+
+@app.route('/compose_routes/<int:itineraty_id>', methods=['GET', 'POST'])
+def update_itineraty(itineraty_id):
+    if request.method == 'POST':
+        updated_bus_id = request.form['bus_id']
+        updated_routes_id = request.form['routes_id']
+        updated_date_time = request.form['date_time']
+        updated_driver_employee_id = request.form['driver_employee_id']
+        updated_conductor_employee_id = request.form['conductor_employee_id']
+
+        connect.update_itineraty((updated_bus_id, updated_routes_id, updated_date_time, updated_driver_employee_id, updated_conductor_employee_id, itineraty_id))
+        return redirect(url_for('compose_routes'))
+
+    itineraty = connect.get_itineraty_by_id(itineraty_id)
+    buses = connect.get_bus_list()
+    routes = connect.get_routes_list()
+    employees = connect.get_employee_list()
+    return render_template('./data/itineraty/edit.html', itineraty=itineraty, buses=buses, routes=routes, employees=employees)
+
+#_____________________________________________________________
+
 @app.route('/queries')
 def queries_page():
     return render_template('./data/queries.html')
