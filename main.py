@@ -182,35 +182,39 @@ def list_routes():
     routes = connect.get_routes_list()
     return render_template('./data/routes/list.html', routes=routes)
 
-@app.route('/edit/routes/<int:routes_id>')
-def edit_routes(routes_id):
-    routes = connect.get_routes_by_id(routes_id)
-    if routes is None:
-        return "Запись не найдена"
-    return render_template('/data/routes/edit.html', routes=routes)
-
-@app.route('/edit/routes/<int:routes_id>', methods=['POST'])
-def update_routes(routes_id):
-    new_name = request.form['Name']
-    connect.update_routes((new_name, routes_id))
-    return redirect(url_for('list_routes'))
-
-@app.route('/edit/routes/delete/<int:routes_id>')
-def delete_routes(routes_id):
-    connect.delete_routes(routes_id)
-    return redirect(url_for('list_routes'))
-
-@app.route('/edit/routest/add', methods=['GET', 'POST'])
-def add_routes():
+@app.route('/edit/routes/add', methods=['GET', 'POST'])
+def add_route():
     if request.method == 'POST':
-        new_name = request.form['Name']
-        connect.add_routes(new_name)
+        number = request.form['number']
+        from_location = request.form['from_location']
+        to_location = request.form['to_location']
+        departure_time = request.form['departure_time']
+        arrival_time = request.form['arrival_time']
+
+        connect.add_route((number, from_location, to_location, departure_time, arrival_time))
         return redirect(url_for('list_routes'))
-    else:
-        routes = {
-            'Name': ''
-        }
-        return render_template('./data/routes/add.html', routes=routes)
+
+    return render_template('./data/routes/add.html')
+
+@app.route('/edit/routes/delete/<int:route_id>')
+def delete_route(route_id):
+    connect.delete_route(route_id)
+    return redirect(url_for('list_routes'))
+
+@app.route('/edit/routes/<int:route_id>', methods=['GET', 'POST'])
+def update_route(route_id):
+    if request.method == 'POST':
+        number = request.form['number']
+        from_location = request.form['from_location']
+        to_location = request.form['to_location']
+        departure_time = request.form['departure_time']
+        arrival_time = request.form['arrival_time']
+
+        connect.update_route((number, from_location, to_location, departure_time, arrival_time, route_id))
+        return redirect(url_for('list_routes'))
+
+    route = connect.get_route_by_id(route_id)
+    return render_template('./data/routes/edit.html', route=route)
 
 # ==========
 #   bus

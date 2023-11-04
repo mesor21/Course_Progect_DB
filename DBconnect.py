@@ -121,30 +121,35 @@ class Database:
 #   routes
 # ==========
     def get_routes_list(self):
-        return self.query("SELECT * FROM routes")
+        return self.query("SELECT * FROM Routes")
 
-    def get_routes_by_id(self, id):
-        post_data = self.query("SELECT * FROM routes WHERE RoutesID = %s", (id,))
-        if post_data:
-            post_dict = {
-                'RoutesID': post_data[0][0],
-                'Name': post_data[0][1]
+    def get_route_by_id(self, data):
+        route_data = self.query("SELECT * FROM Routes WHERE RoutesID = %s", (data,))
+        if route_data:
+            route_dict = {
+                'RoutesID': route_data[0][0],
+                'Number': route_data[0][1],
+                'From': route_data[0][2],
+                'To': route_data[0][3],
+                'DepartureTime': route_data[0][4],
+                'ArrivalTime': route_data[0][5]
             }
         else:
-            post_dict = {}
-        return post_dict
+            route_dict = {}
+        return route_dict
 
-    def update_routes(self, data):
-        update_post_sql = "UPDATE routes SET name = %s WHERE RoutesID = %s"
-        self.query(update_post_sql, data)
+    def update_route(self, data):
+        update_route_sql = "UPDATE Routes SET Number = %s, \"From\" = %s, \"To\" = %s, DepartureTime = %s, ArrivalTime = %s WHERE RoutesID = %s"
+        self.query(update_route_sql, data)
 
-    def add_routes(self, data):
-        insert_routes_sql = "INSERT INTO Routes (name) VALUES (%s)"
-        return self.query(insert_routes_sql, (data,))
+    def add_route(self, data):
+        insert_route_sql = "INSERT INTO Routes (Number, \"From\", \"To\", DepartureTime, ArrivalTime) VALUES (%s, %s, %s, %s, %s)"
+        self.query(insert_route_sql, data)
 
-    def delete_routes(self, id):
-        delete_post_sql = "DELETE FROM Routes WHERE RoutesID = %s"
-        self.query(delete_post_sql, (id,))
+    def delete_route(self, data):
+        delete_route_sql = "DELETE FROM Routes WHERE RoutesID = %s"
+        self.query(delete_route_sql, (data,))
+
 # ==========
 #   Employee
 # ==========

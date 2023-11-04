@@ -2,29 +2,38 @@
 <html>
 <head>
     <title>List Routes</title>
+</head>
+<body>
+    <h1>Edit Routes</h1>
     <a href="{{ url_for('main_page') }}">Основная страница</a>
     <a href="{{ url_for('edit_page') }}">Изменение данных</a>
     <a href="{{ url_for('compose_routes') }}">Составление маршрутных листов</a>
     <a href="{{ url_for('queries_page') }}">Запросы</a>
-</head>
-<body>
-    <h1>List Routes</h1>
     <table border="1">
         <tr>
             <th>Routes ID</th>
             <th>Number</th>
-            <th>Edit </th>
-            <th>Delete</th>
+            <th>From</th>
+            <th>To</th>
+            <th>Departure Time</th>
+            <th>Arrival Time</th>
+            <th>Actions</th>
         </tr>
-        {% for rout in routes %}
+        {% for route in routes %}
         <tr>
-            <td>{{ rout[0] }}</td>
-            <td>{{ rout[1] }}</td>
-            <td><a href="{{ url_for('edit_routes', routes_id=rout[0]) }}">Изменить</a></td>
-            <td><a href="{{ url_for('delete_routes', routes_id=rout[0]) }}">Удалить</a></td>
+            <td>{{ route[0] }}</td>
+            <td>{{ route[1] }}</td>
+            <td>{{ route[2] }}</td>
+            <td>{{ route[3] }}</td>
+            <td>{{ route[4] }}</td>
+            <td>{{ route[5] }}</td>
+            <td>
+                <a href="{{ url_for('update_route', route_id=route[0]) }}">Изменить</a>
+                <a href="{{ url_for('delete_route', route_id=route[0]) }}">Удалить</a>
+            </td>
         </tr>
         {% endfor %}
     </table>
-    <a href="{{ url_for('add_routes') }}">Добавить маршрут</a>
+    <a href="{{ url_for('add_route') }}">Добавить маршрут</a>
 </body>
 </html>

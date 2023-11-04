@@ -1,17 +1,32 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Edit Routes</title>
+    <title>Edit Route</title>
+</head>
+<body>
+    <h1>Edit Route</h1>
     <a href="{{ url_for('main_page') }}">Основная страница</a>
     <a href="{{ url_for('edit_page') }}">Изменение данных</a>
     <a href="{{ url_for('compose_routes') }}">Составление маршрутных листов</a>
     <a href="{{ url_for('queries_page') }}">Запросы</a>
-</head>
-<body>
-    <h1>Edit Routes</h1>
-        <form method="POST" action="{{ url_for('update_routes', routes_id=routes['RoutesID']) }}">
-            <input type="text" name="Name" value="{{ routes['Name'] }}">
-            <input type="submit" value="Save">
-        </form>
+
+    <form method="POST" action="{{ url_for('update_route', route_id=route['RoutesID']) }}">
+        <label for="number">Number:</label>
+        <input type="text" name="number" id="number" value="{{ route['Number'] }}" required><br>
+
+        <label for="from_location">From Location:</label>
+        <input type="text" name="from_location" id="from_location" value="{{ route['From'] }}" required><br>
+
+        <label for="to_location">To Location:</label>
+        <input type="text" name="to_location" id="to_location" value="{{ route['To'] }}" required><br>
+
+        <label for="departure_time">Departure Time:</label>
+        <input type="text" name="departure_time" id="departure_time" value="{{ route['DepartureTime'] }}" required><br>
+
+        <label for="arrival_time">Arrival Time:</label>
+        <input type="text" name="arrival_time" id="arrival_time" value="{{ route['ArrivalTime'] }}" required><br>
+
+        <input type="submit" value="Сохранить изменения">
+    </form>
 </body>
 </html>

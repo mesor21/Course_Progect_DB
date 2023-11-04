@@ -67,8 +67,8 @@ CREATE TABLE Routes (
     Number varchar(255) NOT NULL,
     "From" varchar(255) NOT NULL,
     "To" varchar(255) NOT NULL,
-    DepartureTime timestamp,
-    ArrivalTime timestamp
+    DepartureTime varchar(255),
+    ArrivalTime varchar(255)
 );
 CREATE TABLE Brand (
     BrandID serial PRIMARY KEY,
