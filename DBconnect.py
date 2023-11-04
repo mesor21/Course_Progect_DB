@@ -150,9 +150,12 @@ class Database:
 # ==========
     def get_employee_list(self):
         return self.query("""
-            SELECT Employee.EmployeeID, Employee.name, Employee.secondName, Employee.LastName, Post.postName
+            SELECT Employee.EmployeeID, Employee.name, Employee.secondName, Employee.LastName, 
+            JobTitle.postName, DriverCategory.Category, Department.Name
             FROM Employee
-            LEFT JOIN Post ON Employee.PostID = Post.PostID;
+            LEFT JOIN JobTitle ON Employee.JobTitleID = JobTitle.JobTitleID
+            LEFT JOIN DriverCategory ON Employee.DriverCategoryID = DriverCategory.DriverCategoryID
+            LEFT JOIN Department ON Employee.DepartmentID = Department.DepartmentID;
         """)
 
     def get_employee_by_id(self, id):
@@ -160,21 +163,23 @@ class Database:
         if employee_data:
             employee_dict = {
                 'EmployeeID': employee_data[0][0],
-                'name': employee_data[0][1],
-                'secondName': employee_data[0][2],
-                'lastName': employee_data[0][3],
-                'PostId': employee_data[0][4],
+                'Name': employee_data[0][1],
+                'SecondName': employee_data[0][2],
+                'LastName': employee_data[0][3],
+                'JobTitleID': employee_data[0][4],
+                'DriverCategoryID': employee_data[0][5],
+                'DepartmentID': employee_data[0][6]
             }
         else:
             employee_dict = {}
         return employee_dict
 
     def update_employee(self, data):
-        update_employee_sql = "UPDATE Employee SET name = %s ,secondName = %s, lastName = %s, PostId = %s WHERE EmployeeID = %s"
+        update_employee_sql = "UPDATE Employee SET name = %s, secondName = %s, lastName = %s, JobTitleID = %s, DriverCategoryID = %s, DepartmentID = %s WHERE EmployeeID = %s"
         self.query(update_employee_sql, data)
 
     def add_employee(self, data):
-        insert_employee_sql = "INSERT INTO Employee (name, secondName, lastName, PostId) VALUES (%s, %s, %s, %s)"
+        insert_employee_sql = "INSERT INTO Employee (name, secondName, lastName, JobTitleID, DriverCategoryID, DepartmentID) VALUES (%s, %s, %s, %s, %s, %s)"
         return self.query(insert_employee_sql, data)
 
     def delete_employee(self, id):

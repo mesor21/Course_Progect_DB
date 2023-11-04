@@ -124,6 +124,7 @@ def list_employee():
     employee = connect.get_employee_list()
     return render_template('./data/employee/list.html', employees=employee)
 
+
 @app.route('/edit/employee/add', methods=['GET', 'POST'])
 def add_employee():
     if request.method == 'POST':
@@ -131,14 +132,21 @@ def add_employee():
         second_name = request.form['secondName']
         last_name = request.form['LastName']
         post_id = request.form['jobTitle']
-        connect.add_employee((name, second_name, last_name, post_id))
+        department_id = request.form['department']
+        driver_category_id = request.form['driverCategory']
+
+        connect.add_employee((name, second_name, last_name, post_id, driver_category_id, department_id))
         return redirect(url_for('list_employee'))
-    posts = connect.get_post_list()
-    return render_template('./data/employee/add.html', posts=posts)
-@app.route('/edit/employee/delete/<int:employee_id>')
-def delete_employee(employee_id):
-    connect.delete_employee(employee_id)
-    return redirect(url_for('list_employee'))
+
+    # Получите списки должностей, отделов и категорий водителей
+    posts = connect.get_jobTitle_list()
+    departments = connect.get_department_list()
+    driver_categories = connect.get_driver_category_list()
+
+    return render_template('./data/employee/add.html', posts=posts, departments=departments,
+                           driver_categories=driver_categories)
+
+
 @app.route('/edit/employee/<int:employee_id>', methods=['GET', 'POST'])
 def update_employee(employee_id):
     if request.method == 'POST':
@@ -146,12 +154,25 @@ def update_employee(employee_id):
         updated_second_name = request.form['secondName']
         updated_last_name = request.form['LastName']
         updated_post_id = request.form['jobTitle']
-        connect.update_employee((updated_name, updated_second_name, updated_last_name, updated_post_id, employee_id))
+        updated_department_id = request.form['department']
+        updated_driver_category_id = request.form['driverCategory']
+
+        connect.update_employee((updated_name, updated_second_name, updated_last_name, updated_post_id,
+                                 updated_driver_category_id, updated_department_id, employee_id))
         return redirect(url_for('list_employee'))
 
     employee = connect.get_employee_by_id(employee_id)
-    posts = connect.get_post_list()
-    return render_template('./data/employee/edit.html', employee=employee, posts=posts)
+    posts = connect.get_jobTitle_list()
+    departments = connect.get_department_list()
+    driver_categories = connect.get_driver_category_list()
+    return render_template('./data/employee/edit.html', employee=employee, posts=posts, departments=departments,
+                           driver_categories=driver_categories)
+@app.route('/edit/employee/delete/<int:employee_id>')
+def delete_employee(employee_id):
+    connect.delete_employee(employee_id)
+    return redirect(url_for('list_employee'))
+
+
 
 # ==========
 #   routes

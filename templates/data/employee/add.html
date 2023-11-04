@@ -1,28 +1,42 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Добавление сотрудника</title>
+    <title>Add Employee</title>
 </head>
 <body>
-    <h1>Добавление сотрудника</h1>
-    <form method="POST" action="{{ url_for('add_employee') }}">
-        <label for="name">Имя:</label>
-        <input type="text" name="name" id="name" required><br>
+    <h1>Add Employee</h1>
+    <form method="post">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required><br>
 
-        <label for="secondName">Фамилия:</label>
-        <input type="text" name="secondName" id="secondName" required><br>
+        <label for="secondName">Second Name:</label>
+        <input type="text" id="secondName" name="secondName"><br>
 
-        <label for="LastName">Отчество:</label>
-        <input type="text" name="LastName" id="LastName" required><br>
+        <label for="LastName">Last Name:</label>
+        <input type="text" id="LastName" name="LastName" required><br>
 
-        <label for="post">Должность:</label>
-        <select name="post" id="post">
+        <label for="jobTitle">Job Title:</label>
+        <select id="jobTitle" name="jobTitle">
             {% for post in posts %}
                 <option value="{{ post[0] }}">{{ post[1] }}</option>
             {% endfor %}
         </select><br>
 
-        <input type="submit" value="Добавить сотрудника">
+        <label for="department">Department:</label>
+        <select id="department" name="department">
+            {% for department in departments %}
+                <option value="{{ department[0] }}">{{ department[1] }}</option>
+            {% endfor %}
+        </select><br>
+
+        <label for="driverCategory">Driver Category:</label>
+        <select id="driverCategory" name="driverCategory">
+            {% for category in driver_categories %}
+                <option value="{{ category[0] }}">{{ category[1] }}</option>
+            {% endfor %}
+        </select><br>
+
+        <input type="submit" value="Add Employee">
     </form>
 </body>
 </html>

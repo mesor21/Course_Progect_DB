@@ -1,32 +1,40 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Список сотрудников</title>
+    <title>Employee List</title>
 </head>
 <body>
-    <h1>Список сотрудников</h1>
+    <h1>Employee List</h1>
     <table border="1">
-        <tr>
-            <th>Employee ID</th>
-            <th>Name</th>
-            <th>Second Name</th>
-            <th>Last Name</th>
-            <th>Post</th>
-            <th>Actions</th>
-        </tr>
-        {% for employee in employees %}
-        <tr>
-            <td>{{ employee[0] }}</td>
-            <td>{{ employee[1] }}</td>
-            <td>{{ employee[2] }}</td>
-            <td>{{ employee[3] }}</td>
-            <td>{{ employee[4] }}</td>
-            <td>
-                <a href="{{ url_for('update_employee', employee_id=employee[0]) }}">Изменить</a>
-                <a href="{{ url_for('delete_employee', employee_id=employee[0]) }}">Удалить</a>
-            </td>
-        </tr>
-        {% endfor %}
+        <thead>
+            <tr>
+                <th>Employee ID</th>
+                <th>Name</th>
+                <th>Second Name</th>
+                <th>Last Name</th>
+                <th>Job Title</th>
+                <th>Driver Category</th>
+                <th>Department</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for employee in employees %}
+                <tr>
+                    <td>{{ employee[0] }}</td>
+                    <td>{{ employee[1] }}</td>
+                    <td>{{ employee[2] }}</td>
+                    <td>{{ employee[3] }}</td>
+                    <td>{{ employee[4] }}</td>
+                    <td>{{ employee[5] }}</td>
+                    <td>{{ employee[6] }}</td>
+                    <td>
+                        <a href="{{ url_for('update_employee', employee_id=employee[0]) }}">Изменить</a>
+                        <a href="{{ url_for('delete_employee', employee_id=employee[0]) }}">Удалить</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
     </table>
     <a href="{{ url_for('add_employee') }}">Добавить сотрудника</a>
 </body>
