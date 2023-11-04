@@ -1,13 +1,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Редактирование записи</title>
+    <title>Add Routes</title>
+    <a href="{{ url_for('main_page') }}">Основная страница</a>
+    <a href="{{ url_for('edit_page') }}">Изменение данных</a>
+    <a href="{{ url_for('compose_routes') }}">Составление маршрутных листов</a>
+    <a href="{{ url_for('queries_page') }}">Запросы</a>
 </head>
 <body>
-    <h1>Редактирование записи</h1>
+    <h1>Add Routes</h1>
     <form method="POST" action="{{ url_for('add_routes') }}">
         <input type="text" name="Name" value="{{ routes['Name'] }}">
-        <input type="submit" value="Сохранить">
+        <input type="submit" value="Save">
     </form>
 </body>
 </html>

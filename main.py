@@ -250,7 +250,9 @@ def update_bus(employee_id):
     return render_template('./data/employee/edit.html', employee=employee, posts=posts)
 # ___________________________________
 
-
+@app.route('/compose_routes')
+def compose_routes():
+    return render_template('./data/compose_routes.html')
 # ___________________________________
 @app.route('/queries')
 def queries_page():

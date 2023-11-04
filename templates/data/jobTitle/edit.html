@@ -1,14 +1,18 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Редактирование записи</title>
+    <title>Edit JobTitle</title>
+    <a href="{{ url_for('main_page') }}">Основная страница</a>
+    <a href="{{ url_for('edit_page') }}">Изменение данных</a>
+    <a href="{{ url_for('compose_routes') }}">Составление маршрутных листов</a>
+    <a href="{{ url_for('queries_page') }}">Запросы</a>
 </head>
 <body>
-    <h1>Редактирование записи</h1>
+    <h1>Edit JobTitle</h1>
     <form method="POST" action="{{ url_for('update_jobTitle', jobTitle_id=jobTitle['JobTitleID']) }}">
-        <label for="PostName">Должность:</label>
+        <label for="PostName">Post:</label>
         <input type="text" name="PostName" id="PostName"  value="{{ jobTitle['PostName'] }}"><br>
-        <label for="Salary">Оклад:</label>
+        <label for="Salary">Salary:</label>
         <input type="text" name="Salary" id="Salary" value="{{ jobTitle['Salary'] }}"><br>
         <input type="submit" value="Сохранить">
     </form>

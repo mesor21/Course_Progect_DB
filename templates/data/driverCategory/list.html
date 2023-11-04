@@ -1,10 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Список категорий водителей</title>
+    <title>List DriverCategory</title>
+    <a href="{{ url_for('main_page') }}">Основная страница</a>|
+    <a href="{{ url_for('edit_page') }}">Изменение данных</a>|
+    <a href="{{ url_for('compose_routes') }}">Составление маршрутных листов</a>|
+    <a href="{{ url_for('queries_page') }}">Запросы</a>
 </head>
 <body>
-    <h1>Список категорий водителей</h1>
+    <h1>List DriverCategory</h1>
     <table border="1">
         <tr>
             <th>DriverCategory ID</th>

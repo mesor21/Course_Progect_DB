@@ -1,16 +1,20 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Список маршрутов</title>
+    <title>List Routes</title>
+    <a href="{{ url_for('main_page') }}">Основная страница</a>
+    <a href="{{ url_for('edit_page') }}">Изменение данных</a>
+    <a href="{{ url_for('compose_routes') }}">Составление маршрутных листов</a>
+    <a href="{{ url_for('queries_page') }}">Запросы</a>
 </head>
 <body>
-    <h1>Список маршрутов</h1>
+    <h1>List Routes</h1>
     <table border="1">
         <tr>
             <th>Routes ID</th>
-            <th>Название маршрута</th>
-            <th>Изменить</th>
-            <th>Удалить</th>
+            <th>Number</th>
+            <th>Edit </th>
+            <th>Delete</th>
         </tr>
         {% for rout in routes %}
         <tr>
