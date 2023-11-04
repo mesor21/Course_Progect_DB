@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Редактирование категории водителя</title>
+</head>
+<body>
+    <h1>Редактирование категории водителя</h1>
+    <form method="POST" action="{{ url_for('update_driver_category', driver_category_id=driver_category['DriverCategoryID']) }}">
+        <label for="category">Категория водителя:</label>
+        <input type="text" name="category" id="category" value="{{ driver_category['Category'] }}" required><br>
+
+        <input type="submit" value="Сохранить изменения">
+    </form>
+</body>
+</html>

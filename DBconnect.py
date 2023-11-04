@@ -60,7 +60,7 @@ class Database:
         self.query(delete_post_sql, (data,))
 
 # ========
-#   department
+#   Department
 # ========
     def get_department_list(self):
         return self.query("SELECT * FROM department")
@@ -87,6 +87,35 @@ class Database:
     def delete_department(self, data):
         delete_department_sql = "DELETE FROM department WHERE DepartmentID = %s"
         self.query(delete_department_sql, (data,))
+
+# ========
+#   DriverCategory
+# ========
+    def get_driver_category_list(self):
+        return self.query("SELECT * FROM DriverCategory")
+
+    def get_driver_category_by_id(self, data):
+        driver_category_data = self.query("SELECT * FROM DriverCategory WHERE DriverCategoryID = %s", (data,))
+        if driver_category_data:
+            driver_category_dict = {
+                'DriverCategoryID': driver_category_data[0][0],
+                'Category': driver_category_data[0][1]
+            }
+        else:
+            driver_category_dict = {}
+        return driver_category_dict
+
+    def update_driver_category(self, data):
+        update_driver_category_sql = "UPDATE DriverCategory SET Category = %s WHERE DriverCategoryID = %s"
+        self.query(update_driver_category_sql, data)
+
+    def add_driver_category(self, data):
+        insert_driver_category_sql = "INSERT INTO DriverCategory (Category) VALUES (%s)"
+        self.query(insert_driver_category_sql, data)
+
+    def delete_driver_category(self, data):
+        delete_driver_category_sql = "DELETE FROM DriverCategory WHERE DriverCategoryID = %s"
+        self.query(delete_driver_category_sql, (data,))
 
 # ==========
 #   routes

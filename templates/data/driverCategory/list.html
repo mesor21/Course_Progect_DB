@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Список категорий водителей</title>
+</head>
+<body>
+    <h1>Список категорий водителей</h1>
+    <table border="1">
+        <tr>
+            <th>DriverCategory ID</th>
+            <th>Category</th>
+            <th>Actions</th>
+        </tr>
+        {% for driver_category in driver_categories %}
+        <tr>
+            <td>{{ driver_category[0] }}</td>
+            <td>{{ driver_category[1] }}</td>
+            <td>
+                <a href="{{ url_for('update_driver_category', driver_category_id=driver_category[0]) }}">Изменить</a>
+                <a href="{{ url_for('delete_driver_category', driver_category_id=driver_category[0]) }}">Удалить</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    <a href="{{ url_for('add_driver_category') }}">Добавить категорию водителя</a>
+</body>
+</html>

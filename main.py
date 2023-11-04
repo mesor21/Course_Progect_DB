@@ -85,6 +85,36 @@ def update_department(department_id):
     department = connect.get_department_by_id(department_id)
     return render_template('./data/department/edit.html', department=department)
 
+# ==========
+#   DriverCategory
+# ==========
+@app.route('/edit/driverCategory')
+def list_driver_category():
+    driver_categories = connect.get_driver_category_list()
+    return render_template('./data/driverCategory/list.html', driver_categories=driver_categories)
+
+@app.route('/edit/driverCategory/add', methods=['GET', 'POST'])
+def add_driver_category():
+    if request.method == 'POST':
+        category = request.form['category']
+        connect.add_driver_category((category,))
+        return redirect(url_for('list_driver_category'))
+    return render_template('./data/driverCategory/add.html')
+
+@app.route('/edit/driverCategory/delete/<int:driver_category_id>')
+def delete_driver_category(driver_category_id):
+    connect.delete_driver_category(driver_category_id)
+    return redirect(url_for('list_driver_category'))
+
+@app.route('/edit/driverCategory/<int:driver_category_id>', methods=['GET', 'POST'])
+def update_driver_category(driver_category_id):
+    if request.method == 'POST':
+        category = request.form['category']
+        connect.update_driver_category((category, driver_category_id))
+        return redirect(url_for('list_driver_category'))
+
+    driver_category = connect.get_driver_category_by_id(driver_category_id)
+    return render_template('./data/driverCategory/edit.html', driver_category=driver_category)
 
 # ==========
 #   Employee
