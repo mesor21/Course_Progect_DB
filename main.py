@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for
 from DBconnect import Database
+from datetime import datetime
 
 app = Flask(__name__)
 
@@ -308,8 +309,9 @@ def add_itineraty():
         date_time = request.form['date_time']
         driver_employee_id = request.form['driver_employee_id']
         conductor_employee_id = request.form['conductor_employee_id']
+        formatted_date_time = datetime.strptime(date_time, '%Y-%m-%dT%H:%M').strftime('%Y-%m-%d %H:%M:%S')
 
-        connect.add_itineraty((bus_id, routes_id, date_time, driver_employee_id, conductor_employee_id))
+        connect.add_itineraty((bus_id, routes_id, formatted_date_time, driver_employee_id, conductor_employee_id))
         return redirect(url_for('compose_routes'))
 
     buses = connect.get_bus_list()
@@ -327,7 +329,9 @@ def update_itineraty(itineraty_id):
         updated_driver_employee_id = request.form['driver_employee_id']
         updated_conductor_employee_id = request.form['conductor_employee_id']
 
-        connect.update_itineraty((updated_bus_id, updated_routes_id, updated_date_time, updated_driver_employee_id, updated_conductor_employee_id, itineraty_id))
+        formatted_date_time = datetime.strptime(updated_date_time, '%Y-%m-%dT%H:%M').strftime('%Y-%m-%d %H:%M:%S')
+
+        connect.update_itineraty((updated_bus_id, updated_routes_id, formatted_date_time, updated_driver_employee_id, updated_conductor_employee_id, itineraty_id))
         return redirect(url_for('compose_routes'))
 
     itineraty = connect.get_itineraty_by_id(itineraty_id)

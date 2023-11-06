@@ -295,6 +295,3 @@ class Database:
     def add_itineraty(self, data):
         insert_itineraty_sql = "INSERT INTO Itineraty (BusID, RoutesID, DateTime, Driver_EmployeeID, Conductor_EmployeeID) VALUES (%s, %s, %s, %s, %s)"
         return self.query(insert_itineraty_sql, data)
-    def delete_itineraty(self, id):
-        delete_itineraty_sql = "DELETE FROM Itineraty WHERE ItineratyID = %s"
-        self.query(delete_itineraty_sql, (id,))

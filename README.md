@@ -72,7 +72,7 @@ CREATE TABLE Routes (
 );
 CREATE TABLE Brand (
     BrandID serial PRIMARY KEY,
-     varchar(255) NOT NULL
+    Name varchar(255) NOT NULL
 );
 CREATE TABLE Bus (
     BusID serial PRIMARY KEY,
@@ -85,14 +85,14 @@ CREATE TABLE Itineraty (
     ItineratyID serial PRIMARY KEY,
     BusID integer REFERENCES Bus(BusID),
     RoutesID integer REFERENCES Routes(RoutesID),
-    DateTime varchar(255) NOT NULL,
+    DateTime timestamp,
     Driver_EmployeeID integer REFERENCES Employee(EmployeeID),
     Conductor_EmployeeID integer REFERENCES Employee(EmployeeID)
 );
 ```
 ## Страницы фронтенда
 1. [ ] Оснавная с выбором действия
-   1. [ ] Изменение данных 
+   1. [x] Изменение данных 
       1. [X] Изменение списка JobTitle
       2. [X] Изменение списка Department
       3. [x] Изменение списка DriverCategory
@@ -100,8 +100,8 @@ CREATE TABLE Itineraty (
       5. [x] Изменение списка маршрутов
       6. [x] Изменение списка марки автобусов
       7. [x] Изменение списка автобусов
-   2. [ ] Состовление маршрутов
-      1. [ ] Выбор сотрудника, выбор водителя, выбор автобуса, выбор маршрута, выбор даты и времени и количества roundtrip.
+   2. [x] Состовление маршрутов
+      1. [x] Выбор сотрудника, выбор водителя, выбор автобуса, выбор маршрута, выбор даты и времени и количества roundtrip.
    3. [ ] Запросы
       1. [ ] По дате найти все маршруты и количество автобусов на нём
       2. [ ] По дате и номеру маршрута вся информация об автобусах

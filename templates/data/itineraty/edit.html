@@ -40,7 +40,7 @@
         </select><br>
 
         <label for="date_time">Date and Time:</label>
-        <input type="text" name="date_time" id="date_time" value="{{ itineraty['DateTime'] }}"><br>
+        <input type="datetime-local" name="date_time" id="date_time" value="{{ itineraty['DateTime'] }}" required><br>
 
         <input type="submit" value="Update Itineraty">
     </form>
