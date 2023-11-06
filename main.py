@@ -346,6 +346,24 @@ def update_itineraty(itineraty_id):
 def queries_page():
     return render_template('./data/queries.html')
 
+@app.route('/queries/routes_by_date', methods=['GET', 'POST'])
+def routes_by_date():
+    if request.method == 'POST':
+        date = request.form['date']
+        routes_data = connect.get_routes_by_date(date)
+        return render_template('./data/queries/routes_by_date.html', date=date, routes_data=routes_data)
+    return render_template('./data/queries/routes_by_date.html')
+
+@app.route('/queries/buses_for_route_by_date', methods=['GET', 'POST'])
+def buses_for_route_by_date():
+    if request.method == 'POST':
+        route_number = request.form['route_number']
+        date = request.form['date']
+        bus_data = connect.get_buses_for_route_by_date(route_number, date)
+        return render_template('./data/queries/routes_and_buses_by_date.html', route_number=route_number, date=date, bus_data=bus_data)
+    return render_template('./data/queries/routes_and_buses_by_date.html')
+
+
 
 if __name__ == '__main__':
     connect = Database()

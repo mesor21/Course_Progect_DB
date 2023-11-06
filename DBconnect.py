@@ -295,3 +295,30 @@ class Database:
     def add_itineraty(self, data):
         insert_itineraty_sql = "INSERT INTO Itineraty (BusID, RoutesID, DateTime, Driver_EmployeeID, Conductor_EmployeeID) VALUES (%s, %s, %s, %s, %s)"
         return self.query(insert_itineraty_sql, data)
+
+# ===========
+#   Queries
+# ===========
+    def get_routes_by_date(self, date):
+        # Пример SQL-запроса для поиска маршрутов и количества автобусов на заданную дату
+        sql = """
+        SELECT R.Number, COUNT(I.BusID)
+        FROM Itineraty AS I
+        JOIN Routes AS R ON I.RoutesID = R.RoutesID
+        WHERE DATE(I.DateTime) = %s
+        GROUP BY R.Number
+        """
+        routes_data = self.query(sql, (date,))
+        return routes_data
+
+    def get_buses_for_route_by_date(self, route_number, date):
+        sql = """
+        SELECT B.StateNumber, B.VIN, Br."name" AS BrandName, B.NumberOfPeople
+        FROM Itineraty AS I
+        JOIN Routes AS R ON I.RoutesID = R.RoutesID
+        JOIN Bus AS B ON I.BusID = B.BusID
+        JOIN Brand AS Br ON B.BrandID = Br.BrandID
+        WHERE R.Number = %s AND DATE(I.DateTime) = %s
+        """
+        bus_data = self.query(sql, (route_number, date))
+        return bus_data
