@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Количество рейсов за месяц</title>
+    <a href="{{ url_for('main_page') }}">Основная страница</a>
+    <a href="{{ url_for('edit_page') }}">Изменение данных</a>
+    <a href="{{ url_for('compose_routes') }}">Составление маршрутных листов</a>
+    <a href="{{ url_for('queries_page') }}">Запросы</a>
+</head>
+<body>
+    <h1>Количество рейсов за месяц</h1>
+    <form method="POST">
+        <label for="selected_option">Выберите опцию:</label>
+        <select name="selected_option" id="selected_option">
+            <option value="route">По маршрутам</option>
+            <option value="bus">По автобусам</option>
+        </select><br>
+
+        <label for="month">Выберите месяц:</label>
+        <input type="month" name="month" id="month" required>
+        <input type="submit" value="Подсчитать">
+    </form>
+    {% if selected_option and month %}
+        <h2>Результаты поиска за {{ month }}</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Номер</th>
+                    <th>Количество рейсов</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for data in result_data %}
+                    <tr>
+                        <td>{{ data[0] }}</td>
+                        <td>{{ data[1] }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+</body>
+</html>

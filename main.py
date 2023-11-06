@@ -364,6 +364,25 @@ def buses_for_route_by_date():
     return render_template('./data/queries/routes_and_buses_by_date.html')
 
 
+@app.route('/queries/routes_and_buses_by_month', methods=['GET', 'POST'])
+def routes_and_buses_by_month():
+    if request.method == 'POST':
+        selected_option = request.form['selected_option']
+        month = request.form['month']
+        formatted_month = f"{month}-01"
+        result_data = []
+        if selected_option == 'route':
+            result_data = connect.get_routes_and_counts_by_month(formatted_month)
+        elif selected_option == 'bus':
+            result_data = connect.get_buses_and_counts_by_month(formatted_month)
+        return render_template('./data/queries/routes_and_buses_by_month.html', selected_option=selected_option, month=formatted_month, result_data=result_data)
+    return render_template('./data/queries/routes_and_buses_by_month.html')
+
+@app.route('/queries/shifts_by_employee')
+def shifts_by_employee():
+    result_data = connect.get_shifts_by_employee()
+    return render_template('./data/queries/shifts_by_employee.html',result_data=result_data)
+
 
 if __name__ == '__main__':
     connect = Database()

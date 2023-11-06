@@ -322,3 +322,39 @@ class Database:
         """
         bus_data = self.query(sql, (route_number, date))
         return bus_data
+
+    def get_routes_and_counts_by_month(self, month):
+        sql = """
+        SELECT r."number", COUNT(i."routesid")
+        FROM Itineraty i
+        JOIN Routes r ON i."routesid" = r."routesid"
+        WHERE DATE_TRUNC('month', i."datetime") = %s
+        GROUP BY r."number"
+        ORDER BY r."number";
+        """
+        result_data = self.query(sql, (month,))
+        return result_data
+
+    def get_buses_and_counts_by_month(self, month):
+        sql = """
+        SELECT b."statenumber", COUNT(i."busid")
+        FROM Itineraty i
+        JOIN Bus b ON i."busid" = b."busid"
+        WHERE DATE_TRUNC('month', i."datetime") = %s
+        GROUP BY b."statenumber"
+        ORDER BY b."statenumber";
+        """
+        result_data = self.query(sql, (month,))
+        return result_data
+
+    def get_shifts_by_employee(self):
+        sql = """
+        SELECT e."lastname", COUNT(I."itineratyid") AS "ShiftsCount"
+        FROM Employee e
+        LEFT JOIN Itineraty AS i ON e."employeeid" = i."driver_employeeid" OR e."employeeid" = i."conductor_employeeid"
+        WHERE DATE(i."datetime") >= NOW() - interval '6 months'
+        GROUP BY e."lastname"
+        ORDER BY "ShiftsCount" DESC
+        """
+        result_data = self.query(sql)
+        return result_data
